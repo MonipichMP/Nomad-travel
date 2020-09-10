@@ -14,6 +14,7 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     print("build bottom nav");
     return BottomNavigationBar(
+      backgroundColor: Colors.white,
       showSelectedLabels: true,
       showUnselectedLabels: false,
       currentIndex: index,
@@ -34,7 +35,7 @@ class _BottomNavState extends State<BottomNav> {
                   textAlign: TextAlign.center,
                 )
               : Text(""),
-          icon: index == 0 ? Container(height: 0.0) : Icon(Icons.explore),
+          icon: index == 0 ? Container(height: 0.0) : Icon(Icons.explore, color: Colors.grey,),
         ),
         BottomNavigationBarItem(
           title: index == 1
@@ -44,7 +45,7 @@ class _BottomNavState extends State<BottomNav> {
                   textAlign: TextAlign.center,
                 )
               : Text(""),
-          icon: index == 1 ? Container(height: 0.0) : Icon(Icons.map),
+          icon: index == 1 ? Container(height: 0.0) : Icon(Icons.map, color: Colors.grey,),
         ),
         BottomNavigationBarItem(
           title: index == 2
@@ -55,7 +56,7 @@ class _BottomNavState extends State<BottomNav> {
                 )
               : Text(""),
           icon:
-              index == 2 ? Container(height: 0.0) : Icon(Icons.flight_takeoff),
+              index == 2 ? Container(height: 0.0) : Icon(Icons.flight_takeoff, color: Colors.grey,),
         ),
         BottomNavigationBarItem(
           title: index == 3
@@ -65,7 +66,7 @@ class _BottomNavState extends State<BottomNav> {
                   textAlign: TextAlign.center,
                 )
               : Text(""),
-          icon: index == 3 ? Container(height: 0.0) : Icon(Icons.work),
+          icon: index == 3 ? Container(height: 0.0) : Icon(Icons.work, color: Colors.grey,),
         ),
       ],
     );
