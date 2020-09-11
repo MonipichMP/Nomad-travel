@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nomad_travel/common_widgets/circle_image.dart';
-import 'package:nomad_travel/pages/main_page/main_page_cities.dart';
-import 'package:nomad_travel/pages/main_page/main_page_countries.dart';
-import 'package:nomad_travel/pages/main_page/bottom_nav.dart';
-import 'package:nomad_travel/pages/main_page/main_page_explore.dart';
+import 'package:nomad_travel/constants/colors.dart';
+import 'package:nomad_travel/constants/style.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page.dart';
+import 'package:nomad_travel/pages/flight_page/flight_page.dart';
+import 'package:nomad_travel/pages/job_page/job_page.dart';
+import 'package:nomad_travel/pages/map_page/map_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -11,83 +12,95 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  String dropdownValue = "Explore";
+  int index = 0;
+
+  final menuScreens = [
+    ExplorePage(),
+    MapPage(),
+    FlightPage(),
+    JobPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  DropdownButton<String>(
-                    value: dropdownValue,
-                    icon: Icon(Icons.keyboard_arrow_down, color: Colors.black),
-                    elevation: 0,
-                    style: TextStyle(
-                      fontSize: 24,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+      body: menuScreens.elementAt(index),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {
+            index = value;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            title: index == 0
+                ? Text(
+                    "Explore\n•",
+                    style: captionStyle.copyWith(
+                      color: AppColor.orange,
                     ),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.transparent,
-                    ),
-                    dropdownColor: Colors.white,
-                    items: <String>["Explore", "Countries", "Cities", "Forum"]
-                        .map<DropdownMenuItem<String>>((value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        dropdownValue = newValue;
-                      });
-                    },
+                    textAlign: TextAlign.center,
+                  )
+                : Text(""),
+            icon: index == 0
+                ? Container(height: 0.0)
+                : Icon(
+                    Icons.explore,
+                    color: Colors.grey,
                   ),
-                  Stack(
-                    children: [
-                      CircleImage(
-                        height: 40,
-                        width: 40,
-                        image: NetworkImage(
-                            "https://i.pinimg.com/564x/f4/1f/e3/f41fe384dd173f91201f622e11be8a31.jpg"),
-                      ),
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: Container(
-                          height: 10,
-                          width: 10,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(height: 15),
-              if (dropdownValue == "Explore") MainExplore(),
-              if (dropdownValue == "Countries") MainCountries(),
-              if (dropdownValue == "Cities") MainCities(),
-            ],
           ),
-        ),
+          BottomNavigationBarItem(
+            title: index == 1
+                ? Text(
+                    "Map\n•",
+                    style: captionStyle.copyWith(color: AppColor.orange),
+                    textAlign: TextAlign.center,
+                  )
+                : Text(""),
+            icon: index == 1
+                ? Container(height: 0.0)
+                : Icon(
+                    Icons.map,
+                    color: Colors.grey,
+                  ),
+          ),
+          BottomNavigationBarItem(
+            title: index == 2
+                ? Text(
+                    "Flight\n•",
+                    style: captionStyle.copyWith(color: AppColor.orange),
+                    textAlign: TextAlign.center,
+                  )
+                : Text(""),
+            icon: index == 2
+                ? Container(height: 0.0)
+                : Icon(
+                    Icons.flight_takeoff,
+                    color: Colors.grey,
+                  ),
+          ),
+          BottomNavigationBarItem(
+            title: index == 3
+                ? Text(
+                    "Jobs\n•",
+                    style: captionStyle.copyWith(color: AppColor.orange),
+                    textAlign: TextAlign.center,
+                  )
+                : Text(""),
+            icon: index == 3
+                ? Container(height: 0.0)
+                : Icon(
+                    Icons.work,
+                    color: Colors.grey,
+                  ),
+          ),
+        ],
       ),
-      bottomNavigationBar: BottomNav(),
     );
   }
 }

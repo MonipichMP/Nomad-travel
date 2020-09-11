@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
-import 'package:nomad_travel/common_widgets/orange_backpack.dart';
 import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/main_page/main_page.dart';
@@ -88,7 +87,7 @@ class ForgotPasswordPage extends StatelessWidget {
                   title: "Reset Password",
                   onPressed: () {
                     if (formKey.currentState.validate()) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => MainPage(),
