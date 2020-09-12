@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:nomad_travel/common_widgets/circle_image.dart';
 import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
+import 'package:nomad_travel/pages/flight_page/flight_card_book.dart';
 
 class FlightReturn extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class FlightReturn extends StatefulWidget {
 }
 
 class _FlightReturnState extends State<FlightReturn> {
+  ///date
   DateTime dateFrom = DateTime.now();
   DateTime dateTo = DateTime(
     DateTime.now().year,
@@ -16,9 +19,70 @@ class _FlightReturnState extends State<FlightReturn> {
     DateTime.now().day + 1,
   );
 
+  /// single variable
   String placeFrom = "PHP";
   String placeTo = "SYD";
+  int typeSelected = 1;
+
+  /// list variable
   List cities = ["PHP", "SYD", "HNG", "BNK", "KUL", "CHM"];
+  List types = List.generate(10, (index) => index + 1);
+  List results = [
+    {
+      "id": 1,
+      "image": "assets/images/sun.jpg",
+      "timeStart": "14:10",
+      "timeArrive": "12:15",
+      "stop": "1 stop",
+      "duration": "36h 5mn",
+      "price": "\$980"
+    },
+    {
+      "id": 2,
+      "image": "assets/images/map.jpeg",
+      "timeStart": "14:10",
+      "timeArrive": "7:30",
+      "stop": "1 stop",
+      "duration": "31h 20mn",
+      "price": "\$1160"
+    },
+    {
+      "id": 3,
+      "image": "assets/images/berlin.jpg",
+      "timeStart": "17:25",
+      "timeArrive": "06:30",
+      "stop": "1 stop",
+      "duration": "27h 5mn",
+      "price": "\$1205"
+    },
+    {
+      "id": 4,
+      "image": "assets/images/aus.jpg",
+      "timeStart": "17:25",
+      "timeArrive": "06:10",
+      "stop": "Non stop",
+      "duration": "26h 45mn",
+      "price": "\$1340"
+    },
+    {
+      "id": 5,
+      "image": "assets/images/and.jpg",
+      "timeStart": "10:10",
+      "timeArrive": "20:25",
+      "stop": "Non stop",
+      "duration": "24h 15mn",
+      "price": "\$1500"
+    },
+    {
+      "id": 6,
+      "image": "assets/images/afgan.jpg",
+      "timeStart": "17:25",
+      "timeArrive": "06:30",
+      "stop": "1 stop",
+      "duration": "27h 5mn",
+      "price": "\$1205"
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +123,14 @@ class _FlightReturnState extends State<FlightReturn> {
                       height: 130,
                       width: 150,
                       decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.grey[400],
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             "From",
-                            style: normalStyle.copyWith(color: AppColor.grey),
+                            style: normalStyle.copyWith(color: AppColor.white),
                           ),
                           Text(
                             placeFrom,
@@ -74,14 +138,14 @@ class _FlightReturnState extends State<FlightReturn> {
                           ),
                           Text(
                             longNameCityFrom(placeFrom),
-                            style: normalStyle.copyWith(color: AppColor.grey),
+                            style: normalStyle.copyWith(color: AppColor.white),
                           ),
                         ],
                       ),
                     ),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -90,7 +154,7 @@ class _FlightReturnState extends State<FlightReturn> {
                             title: Text("select city"),
                             children: List.generate(
                               cities.length,
-                                  (index) => SimpleDialogOption(
+                              (index) => SimpleDialogOption(
                                 child: Text(cities[index]),
                                 onPressed: () {
                                   Navigator.pop(context, cities[index]);
@@ -108,14 +172,14 @@ class _FlightReturnState extends State<FlightReturn> {
                       height: 130,
                       width: 150,
                       decoration: BoxDecoration(
-                          color: Colors.grey,
+                          color: Colors.grey[400],
                           borderRadius: BorderRadius.circular(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
                             "To",
-                            style: normalStyle.copyWith(color: AppColor.grey),
+                            style: normalStyle.copyWith(color: AppColor.white),
                           ),
                           Text(
                             placeTo,
@@ -123,7 +187,7 @@ class _FlightReturnState extends State<FlightReturn> {
                           ),
                           Text(
                             longNameCityFrom(placeTo),
-                            style: normalStyle.copyWith(color: AppColor.grey),
+                            style: normalStyle.copyWith(color: AppColor.white),
                           ),
                         ],
                       ),
@@ -182,7 +246,7 @@ class _FlightReturnState extends State<FlightReturn> {
                   height: 50,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(20)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -214,7 +278,7 @@ class _FlightReturnState extends State<FlightReturn> {
                   height: 50,
                   width: 150,
                   decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(20)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -230,19 +294,45 @@ class _FlightReturnState extends State<FlightReturn> {
             ],
           ),
           SizedBox(height: 20),
-          Container(
-            height: 50,
-            width: 320,
-            decoration: BoxDecoration(
-                color: Colors.grey, borderRadius: BorderRadius.circular(20)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  "1 adult Economy",
-                  style: subtitleStyle.copyWith(color: Colors.black),
-                ),
-              ],
+          InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                barrierDismissible: false,
+                builder: (context) {
+                  return SimpleDialog(
+                    title: Text("select type"),
+                    children: List.generate(
+                      types.length,
+                      (index) => SimpleDialogOption(
+                        child: Text("${types[index]} adult(s) Economy"),
+                        onPressed: () {
+                          Navigator.pop(context, types[index]);
+                          setState(() {
+                            typeSelected = types[index];
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Container(
+              height: 50,
+              width: 320,
+              decoration: BoxDecoration(
+                  color: Colors.grey[400],
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "$typeSelected adult(s) Economy",
+                    style: subtitleStyle.copyWith(color: Colors.black),
+                  ),
+                ],
+              ),
             ),
           ),
           SizedBox(height: 20),
@@ -276,7 +366,78 @@ class _FlightReturnState extends State<FlightReturn> {
                       ),
                       SizedBox(height: 20),
 
-                      /// display listview
+                      /// display list view
+                      Expanded(
+                        child: ListView.builder(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: results.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FlightCardBook(
+                                    title: "some titles",
+                                    placeFrom: placeFrom,
+                                    placeTo: placeTo,
+                                    image: results[index]['image'],
+                                    reviewer: 1121,
+                                    price: results[index]['price'],
+                                    distance: 123,
+                                    star: 4,
+                                  ),
+                                ),
+                              ),
+                              child: ListTile(
+                                leading: CircleImage(
+                                  width: 40,
+                                  height: 40,
+                                  image: AssetImage(results[index]['image']),
+                                ),
+                                title: Text.rich(
+                                  TextSpan(
+                                    style: subtitleStyle.copyWith(
+                                        color: Colors.black),
+                                    children: [
+                                      TextSpan(
+                                          text: results[index]['timeStart']),
+                                      TextSpan(text: " - "),
+                                      TextSpan(
+                                          text: results[index]['timeArrive'])
+                                    ],
+                                  ),
+                                ),
+                                subtitle: Text.rich(
+                                  TextSpan(
+                                    style: captionStyle.copyWith(
+                                        color: Colors.grey),
+                                    children: [
+                                      TextSpan(text: results[index]['stop']),
+                                      TextSpan(text: ", "),
+                                      TextSpan(text: results[index]['duration'])
+                                    ],
+                                  ),
+                                ),
+                                trailing: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      results[index]['price'],
+                                      style: titleStyle.copyWith(
+                                          color: Colors.black),
+                                    ),
+                                    Icon(
+                                      Icons.keyboard_arrow_right,
+                                      color: Colors.grey,
+                                      size: 20,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
