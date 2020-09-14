@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/search_text_field.dart';
 import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
-import 'package:nomad_travel/pages/main_page/main_page_cities_card.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page_cities_card.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class MainCities extends StatefulWidget {

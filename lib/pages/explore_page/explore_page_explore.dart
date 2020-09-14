@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/category_select.dart';
 import 'package:nomad_travel/common_widgets/search_text_field.dart';
 import 'package:nomad_travel/constants/style.dart';
-import 'package:nomad_travel/pages/main_page/place_card.dart';
+import 'package:nomad_travel/common_widgets/place_card.dart';
 
 class MainExplore extends StatefulWidget {
   @override

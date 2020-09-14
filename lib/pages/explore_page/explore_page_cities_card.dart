@@ -61,7 +61,7 @@ class MainCityCard extends StatelessWidget {
                       onPressed: () {},
                     ),
                   ],
-                )
+                ),
               ],
             ),
             Expanded(

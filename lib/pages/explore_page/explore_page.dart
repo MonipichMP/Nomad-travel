@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/circle_image.dart';
-import 'package:nomad_travel/pages/main_page/main_page_cities.dart';
-import 'package:nomad_travel/pages/main_page/main_page_countries.dart';
-import 'package:nomad_travel/pages/main_page/main_page_explore.dart';
-import 'package:nomad_travel/pages/main_page/main_page_forum.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page_cities.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page_countries.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page_explore.dart';
+import 'package:nomad_travel/pages/explore_page/explore_page_forum.dart';
+import 'package:nomad_travel/pages/explore_page/favorite_explore_page.dart';
 
 class ExplorePage extends StatefulWidget {
   @override
@@ -39,8 +40,13 @@ class _ExplorePageState extends State<ExplorePage> {
                     color: Colors.transparent,
                   ),
                   dropdownColor: Colors.white,
-                  items: <String>["Explore", "Countries", "Cities", "Forums"]
-                      .map<DropdownMenuItem<String>>((value) {
+                  items: <String>[
+                    "Explore",
+                    "Countries",
+                    "Cities",
+                    "Forums",
+                    "Favorites"
+                  ].map<DropdownMenuItem<String>>((value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -82,6 +88,7 @@ class _ExplorePageState extends State<ExplorePage> {
             if (dropdownValue == "Countries") MainCountries(),
             if (dropdownValue == "Cities") MainCities(),
             if (dropdownValue == "Forums") MainForums(),
+            if (dropdownValue == "Favorites") FavoriteExplorePage(),
           ],
         ),
       ),

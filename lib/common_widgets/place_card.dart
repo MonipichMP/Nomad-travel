@@ -30,7 +30,7 @@ class PlaceCard extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
