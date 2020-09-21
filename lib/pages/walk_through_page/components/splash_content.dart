@@ -43,10 +43,22 @@ class SplashContent extends StatelessWidget {
             style: normalStyle.copyWith(color: AppColor.black),
           ),
           SizedBox(height: 40),
-          CircleImage(
+          Container(
             width: 350,
             height: 350,
-            image: NetworkImage(image),
+            child: Stack(
+              overflow: Overflow.clip,
+              children: [
+                Positioned(
+                  left: -60,
+                  child: CircleImage(
+                    width: 350,
+                    height: 350,
+                    image: NetworkImage(image),
+                  ),
+                ),
+              ],
+            ),
           ),
         ],
       ),

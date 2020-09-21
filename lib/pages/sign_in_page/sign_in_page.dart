@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
 import 'package:nomad_travel/common_widgets/orange_backpack.dart';
 import 'package:nomad_travel/constants/colors.dart';
@@ -136,11 +137,35 @@ class SignInPage extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 30),
-                DefaultButton(
-                  height: 56,
-                  color: AppColor.black,
-                  title: "Sign in with Apple",
-                  onPressed: () {},
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 38.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      color: AppColor.black,
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/images/apple-logo.svg",
+                            color: Colors.white,
+                            width: 20,
+                            height: 20,
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            "Sign in with Apple",
+                            style: titleStyle,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(height: 20),
                 Center(

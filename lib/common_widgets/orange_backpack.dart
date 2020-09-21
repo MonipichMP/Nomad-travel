@@ -12,10 +12,12 @@ class OrangeBackpack extends StatelessWidget {
         color: AppColor.orange,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: SvgPicture.asset(
-        "assets/images/backpack.svg",
-        width: 10,
-        height: 10,
+      child: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: SvgPicture.asset(
+          "assets/images/backpack.svg",
+          color: Colors.white70,
+        ),
       ),
     );
   }

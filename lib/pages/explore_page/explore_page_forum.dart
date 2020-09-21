@@ -4,6 +4,7 @@ import 'package:nomad_travel/common_widgets/circle_image.dart';
 import 'package:nomad_travel/common_widgets/search_text_field.dart';
 import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
+import 'package:nomad_travel/pages/explore_page/profile_page.dart';
 
 class MainForums extends StatefulWidget {
   @override
@@ -153,17 +154,29 @@ class _MainForumsState extends State<MainForums> {
                       width: double.infinity,
                       height: 120,
                       decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       child: Row(
                         children: [
                           SizedBox(width: 8),
 
                           /// profile image
-                          CircleImage(
-                            width: 50,
-                            height: 50,
-                            image: AssetImage(forumDataStatic[index]['image']),
+                          InkWell(
+                            onTap: () => Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ProfilePage(
+                                  name: forumDataStatic[index]['userAsked'],
+                                  image: forumDataStatic[index]['image'],
+                                ),
+                              ),
+                            ),
+                            child: CircleImage(
+                              width: 50,
+                              height: 50,
+                              image:
+                                  AssetImage(forumDataStatic[index]['image']),
+                            ),
                           ),
                           SizedBox(width: 8),
 
@@ -203,6 +216,7 @@ class _MainForumsState extends State<MainForums> {
                                   ],
                                 ),
                                 SizedBox(height: 10),
+
                                 /// comments and love
                                 Row(
                                   children: [

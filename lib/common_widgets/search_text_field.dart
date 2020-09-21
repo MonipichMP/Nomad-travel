@@ -26,6 +26,11 @@ class SearchTextField extends StatelessWidget {
           borderSide: BorderSide(color: Colors.white),
         ),
       ),
+      onChanged: onChanged,
     );
+  }
+
+  void onChanged(String text){
+    print(text);
   }
 }

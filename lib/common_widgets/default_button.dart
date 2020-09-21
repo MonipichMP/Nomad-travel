@@ -27,14 +27,9 @@ class DefaultButton extends StatelessWidget {
           ),
           color: color,
           onPressed: onPressed,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                title,
-                style: titleStyle,
-              ),
-            ],
+          child: Text(
+            title,
+            style: titleStyle,
           ),
         ),
       ),
