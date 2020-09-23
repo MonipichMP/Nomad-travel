@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
 import 'package:nomad_travel/common_widgets/orange_backpack.dart';
-import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/forgot_password_page/forgot_password_page.dart';
 
@@ -25,7 +24,7 @@ class SignInPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         automaticallyImplyLeading: true,
-        backgroundColor: AppColor.grey,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: SizedBox(
@@ -43,17 +42,17 @@ class SignInPage extends StatelessWidget {
                 SizedBox(height: 20),
                 Text(
                   "Welcome back",
-                  style: titleStyle.copyWith(color: AppColor.black),
+                  style: titleStyle,
                 ),
                 SizedBox(height: 10),
                 Text(
                   "Sign in to continue",
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                 ),
                 SizedBox(height: 50),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: phone,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -88,7 +87,7 @@ class SignInPage extends StatelessWidget {
                 SizedBox(height: 30),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -123,7 +122,6 @@ class SignInPage extends StatelessWidget {
                 SizedBox(height: 50),
                 DefaultButton(
                   height: 56,
-                  color: AppColor.blue,
                   title: "Sign in",
                   onPressed: () {
                     if (formKey.currentState.validate()) {
@@ -146,7 +144,7 @@ class SignInPage extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      color: AppColor.black,
+                      color: Theme.of(context).cardColor,
                       onPressed: () {},
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +178,7 @@ class SignInPage extends StatelessWidget {
                     },
                     child: Text(
                       "Forgot Password",
-                      style: normalStyle.copyWith(color: AppColor.black),
+                      style: normalStyle,
                     ),
                   ),
                 )

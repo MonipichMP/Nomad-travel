@@ -87,40 +87,171 @@ class _FlightReturnState extends State<FlightReturn> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
+      child: Stack(
         children: [
           /// select destination
-          Stack(
+          Column(
             children: [
+              Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return SimpleDialog(
+                                title: Text("select city"),
+                                children: List.generate(
+                                  cities.length,
+                                  (index) => SimpleDialogOption(
+                                    child: Text(cities[index]),
+                                    onPressed: () {
+                                      Navigator.pop(context, cities[index]);
+                                      setState(() {
+                                        placeFrom = cities[index];
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 130,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "From",
+                                style:
+                                    normalStyle.copyWith(color: AppColor.white),
+                              ),
+                              Text(
+                                placeFrom,
+                                style: subHeaderStyle.copyWith(
+                                    color: Colors.black),
+                              ),
+                              Text(
+                                longNameCityFrom(placeFrom),
+                                style:
+                                    normalStyle.copyWith(color: AppColor.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: false,
+                            builder: (context) {
+                              return SimpleDialog(
+                                title: Text("select city"),
+                                children: List.generate(
+                                  cities.length,
+                                  (index) => SimpleDialogOption(
+                                    child: Text(cities[index]),
+                                    onPressed: () {
+                                      Navigator.pop(context, cities[index]);
+                                      setState(() {
+                                        placeTo = cities[index];
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          height: 130,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color: Colors.grey[400],
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                "To",
+                                style:
+                                    normalStyle.copyWith(color: AppColor.white),
+                              ),
+                              Text(
+                                placeTo,
+                                style: subHeaderStyle.copyWith(
+                                    color: Colors.black),
+                              ),
+                              Text(
+                                longNameCityFrom(placeTo),
+                                style:
+                                    normalStyle.copyWith(color: AppColor.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    top: 40,
+                    left: 160,
+                    child: InkWell(
+                      onTap: () {
+                        String swap;
+                        setState(() {
+                          swap = placeFrom;
+                          placeFrom = placeTo;
+                          placeTo = swap;
+                        });
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Icon(
+                          Icons.compare_arrows,
+                          color: Colors.grey,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    onTap: () {
-                      showDialog(
+                    onTap: () async {
+                      DateTime date = await showDatePicker(
                         context: context,
-                        barrierDismissible: false,
-                        builder: (context) {
-                          return SimpleDialog(
-                            title: Text("select city"),
-                            children: List.generate(
-                              cities.length,
-                              (index) => SimpleDialogOption(
-                                child: Text(cities[index]),
-                                onPressed: () {
-                                  Navigator.pop(context, cities[index]);
-                                  setState(() {
-                                    placeFrom = cities[index];
-                                  });
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                        initialDate: DateTime.now(),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2021),
                       );
+                      if (date != null) {
+                        setState(() {
+                          dateFrom = date;
+                        });
+                      }
                     },
                     child: Container(
-                      height: 130,
+                      height: 50,
                       width: 150,
                       decoration: BoxDecoration(
                           color: Colors.grey[400],
@@ -129,47 +260,30 @@ class _FlightReturnState extends State<FlightReturn> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "From",
-                            style: normalStyle.copyWith(color: AppColor.white),
-                          ),
-                          Text(
-                            placeFrom,
-                            style: subHeaderStyle.copyWith(color: Colors.black),
-                          ),
-                          Text(
-                            longNameCityFrom(placeFrom),
-                            style: normalStyle.copyWith(color: AppColor.white),
+                            DateFormat('MMM-dd-yyyy').format(dateFrom),
+                            style: subtitleStyle.copyWith(color: Colors.black),
                           ),
                         ],
                       ),
                     ),
                   ),
                   InkWell(
-                    onTap: () {
-                      showDialog(
+                    onTap: () async {
+                      final now = DateTime.now();
+                      DateTime date = await showDatePicker(
                         context: context,
-                        barrierDismissible: false,
-                        builder: (context) {
-                          return SimpleDialog(
-                            title: Text("select city"),
-                            children: List.generate(
-                              cities.length,
-                              (index) => SimpleDialogOption(
-                                child: Text(cities[index]),
-                                onPressed: () {
-                                  Navigator.pop(context, cities[index]);
-                                  setState(() {
-                                    placeTo = cities[index];
-                                  });
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                        initialDate: DateTime(now.year, now.month, now.day + 1),
+                        firstDate: DateTime(2020),
+                        lastDate: DateTime(2021),
                       );
+                      if (date != null) {
+                        setState(() {
+                          dateTo = date;
+                        });
+                      }
                     },
                     child: Container(
-                      height: 130,
+                      height: 50,
                       width: 150,
                       decoration: BoxDecoration(
                           color: Colors.grey[400],
@@ -178,16 +292,8 @@ class _FlightReturnState extends State<FlightReturn> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            "To",
-                            style: normalStyle.copyWith(color: AppColor.white),
-                          ),
-                          Text(
-                            placeTo,
-                            style: subHeaderStyle.copyWith(color: Colors.black),
-                          ),
-                          Text(
-                            longNameCityFrom(placeTo),
-                            style: normalStyle.copyWith(color: AppColor.white),
+                            DateFormat('MMM-dd-yyyy').format(dateTo),
+                            style: subtitleStyle.copyWith(color: Colors.black),
                           ),
                         ],
                       ),
@@ -195,56 +301,34 @@ class _FlightReturnState extends State<FlightReturn> {
                   ),
                 ],
               ),
-              Positioned(
-                top: 40,
-                left: 160,
-                child: InkWell(
-                  onTap: () {
-                    String swap;
-                    setState(() {
-                      swap = placeFrom;
-                      placeFrom = placeTo;
-                      placeTo = swap;
-                    });
-                  },
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                    child: Icon(
-                      Icons.compare_arrows,
-                      color: Colors.grey,
-                      size: 28,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
+              SizedBox(height: 20),
               InkWell(
-                onTap: () async {
-                  DateTime date = await showDatePicker(
+                onTap: () {
+                  showDialog(
                     context: context,
-                    initialDate: DateTime.now(),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2021),
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return SimpleDialog(
+                        title: Text("select type"),
+                        children: List.generate(
+                          types.length,
+                          (index) => SimpleDialogOption(
+                            child: Text("${types[index]} adult(s) Economy"),
+                            onPressed: () {
+                              Navigator.pop(context, types[index]);
+                              setState(() {
+                                typeSelected = types[index];
+                              });
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   );
-                  if (date != null) {
-                    setState(() {
-                      dateFrom = date;
-                    });
-                  }
                 },
                 child: Container(
                   height: 50,
-                  width: 150,
+                  width: 320,
                   decoration: BoxDecoration(
                       color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(20)),
@@ -252,39 +336,7 @@ class _FlightReturnState extends State<FlightReturn> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Text(
-                        DateFormat('MMM-dd-yyyy').format(dateFrom),
-                        style: subtitleStyle.copyWith(color: Colors.black),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  final now = DateTime.now();
-                  DateTime date = await showDatePicker(
-                    context: context,
-                    initialDate: DateTime(now.year, now.month, now.day + 1),
-                    firstDate: DateTime(2020),
-                    lastDate: DateTime(2021),
-                  );
-                  if (date != null) {
-                    setState(() {
-                      dateTo = date;
-                    });
-                  }
-                },
-                child: Container(
-                  height: 50,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      color: Colors.grey[400],
-                      borderRadius: BorderRadius.circular(20)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        DateFormat('MMM-dd-yyyy').format(dateTo),
+                        "$typeSelected adult(s) Economy",
                         style: subtitleStyle.copyWith(color: Colors.black),
                       ),
                     ],
@@ -293,57 +345,18 @@ class _FlightReturnState extends State<FlightReturn> {
               ),
             ],
           ),
-          SizedBox(height: 20),
-          InkWell(
-            onTap: () {
-              showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (context) {
-                  return SimpleDialog(
-                    title: Text("select type"),
-                    children: List.generate(
-                      types.length,
-                      (index) => SimpleDialogOption(
-                        child: Text("${types[index]} adult(s) Economy"),
-                        onPressed: () {
-                          Navigator.pop(context, types[index]);
-                          setState(() {
-                            typeSelected = types[index];
-                          });
-                        },
-                      ),
-                    ),
-                  );
-                },
-              );
-            },
-            child: Container(
-              height: 50,
-              width: 320,
-              decoration: BoxDecoration(
-                  color: Colors.grey[400],
-                  borderRadius: BorderRadius.circular(20)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "$typeSelected adult(s) Economy",
-                    style: subtitleStyle.copyWith(color: Colors.black),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 20),
 
           /// search result
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Container(
+          DraggableScrollableSheet(
+            initialChildSize: 0.58,
+            minChildSize: 0.58,
+            maxChildSize: 1,
+            builder: (context, scrollController) {
+              return Container(
                 height: double.infinity,
                 width: double.infinity,
+                margin: EdgeInsets.only(left: 8.0, right: 8.0),
+                padding: EdgeInsets.symmetric(horizontal: 14),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
@@ -351,98 +364,100 @@ class _FlightReturnState extends State<FlightReturn> {
                     topRight: Radius.circular(20),
                   ),
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 14),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                child: Container(
+                  height: double.infinity,
+                  width: MediaQuery.of(context).size.width,
+                  child: ListView(
+                    controller: scrollController,
                     children: [
                       SizedBox(height: 10),
-                      Container(
-                        width: 30,
-                        height: 5,
-                        decoration: BoxDecoration(
+                      Center(
+                        child: Container(
+                          width: 30,
+                          height: 5,
+                          decoration: BoxDecoration(
                             color: Colors.grey[400],
-                            borderRadius: BorderRadius.circular(3)),
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
 
                       /// display list view
-                      Expanded(
-                        child: ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          itemCount: results.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => FlightCardBook(
-                                    title: "some titles",
-                                    placeFrom: placeFrom,
-                                    placeTo: placeTo,
-                                    image: results[index]['image'],
-                                    reviewer: 1121,
-                                    price: results[index]['price'],
-                                    distance: 123,
-                                    star: 4,
-                                  ),
+                      ListView.builder(
+                        shrinkWrap: true,
+                        controller: ScrollController(keepScrollOffset: false),
+                        // physics: BouncingScrollPhysics(),
+                        itemCount: results.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FlightCardBook(
+                                  title: "some titles",
+                                  placeFrom: placeFrom,
+                                  placeTo: placeTo,
+                                  image: results[index]['image'],
+                                  reviewer: 1121,
+                                  price: results[index]['price'],
+                                  distance: 123,
+                                  star: 4,
                                 ),
                               ),
-                              child: ListTile(
-                                leading: CircleImage(
-                                  width: 40,
-                                  height: 40,
-                                  image: AssetImage(results[index]['image']),
-                                ),
-                                title: Text.rich(
-                                  TextSpan(
-                                    style: subtitleStyle.copyWith(
-                                        color: Colors.black),
-                                    children: [
-                                      TextSpan(
-                                          text: results[index]['timeStart']),
-                                      TextSpan(text: " - "),
-                                      TextSpan(
-                                          text: results[index]['timeArrive'])
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Text.rich(
-                                  TextSpan(
-                                    style: captionStyle.copyWith(
-                                        color: Colors.grey),
-                                    children: [
-                                      TextSpan(text: results[index]['stop']),
-                                      TextSpan(text: ", "),
-                                      TextSpan(text: results[index]['duration'])
-                                    ],
-                                  ),
-                                ),
-                                trailing: Row(
-                                  mainAxisSize: MainAxisSize.min,
+                            ),
+                            child: ListTile(
+                              leading: CircleImage(
+                                width: 40,
+                                height: 40,
+                                image: AssetImage(results[index]['image']),
+                              ),
+                              title: Text.rich(
+                                TextSpan(
+                                  style: subtitleStyle.copyWith(
+                                      color: Colors.black),
                                   children: [
-                                    Text(
-                                      results[index]['price'],
-                                      style: titleStyle.copyWith(
-                                          color: Colors.black),
-                                    ),
-                                    Icon(
-                                      Icons.keyboard_arrow_right,
-                                      color: Colors.grey,
-                                      size: 20,
-                                    )
+                                    TextSpan(text: results[index]['timeStart']),
+                                    TextSpan(text: " - "),
+                                    TextSpan(text: results[index]['timeArrive'])
                                   ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
+                              subtitle: Text.rich(
+                                TextSpan(
+                                  style:
+                                      captionStyle.copyWith(color: Colors.grey),
+                                  children: [
+                                    TextSpan(text: results[index]['stop']),
+                                    TextSpan(text: ", "),
+                                    TextSpan(text: results[index]['duration'])
+                                  ],
+                                ),
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    results[index]['price'],
+                                    style: titleStyle.copyWith(
+                                        color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.keyboard_arrow_right,
+                                    color: Colors.grey,
+                                    size: 20,
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       ),

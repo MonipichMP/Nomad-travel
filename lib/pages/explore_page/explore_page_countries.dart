@@ -70,7 +70,7 @@ class _MainCountriesState extends State<MainCountries> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                     ),
                     child: Stack(
                       children: [
@@ -94,8 +94,7 @@ class _MainCountriesState extends State<MainCountries> {
                               SizedBox(height: 20),
                               Text(
                                 countries[index]['name'],
-                                style:
-                                    subtitleStyle.copyWith(color: Colors.black),
+                                style: subtitleStyle,
                               ),
                             ],
                           ),

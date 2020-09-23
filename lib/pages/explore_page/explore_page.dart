@@ -28,18 +28,18 @@ class _ExplorePageState extends State<ExplorePage> {
               children: [
                 DropdownButton<String>(
                   value: dropdownValue,
-                  icon: Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                  icon: Icon(Icons.keyboard_arrow_down),
                   elevation: 0,
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.black,
                     fontWeight: FontWeight.bold,
+                    color: Theme.of(context).primaryColor,
                   ),
                   underline: Container(
                     height: 2,
                     color: Colors.transparent,
                   ),
-                  dropdownColor: Colors.white,
+                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
                   items: <String>[
                     "Explore",
                     "Countries",

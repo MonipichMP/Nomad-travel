@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
           width: double.infinity,
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20),
           ),
           child: ListView(
@@ -131,9 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: [
                         Text(
                           widget.name,
-                          style: subHeaderStyle.copyWith(
-                            color: Colors.black,
-                          ),
+                          style: subHeaderStyle,
                         ),
                         SizedBox(height: 8),
                         Text(
@@ -224,26 +222,22 @@ class _ProfilePageState extends State<ProfilePage> {
                               children: [
                                 Text(
                                   "7,352",
-                                  style: subtitleStyle.copyWith(
-                                      color: Colors.black),
+                                  style: subtitleStyle,
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "273",
-                                  style: subtitleStyle.copyWith(
-                                      color: Colors.black),
+                                  style: subtitleStyle,
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "16",
-                                  style: subtitleStyle.copyWith(
-                                      color: Colors.black),
+                                  style: subtitleStyle,
                                 ),
                                 SizedBox(height: 5),
                                 Text(
                                   "7",
-                                  style: subtitleStyle.copyWith(
-                                      color: Colors.black),
+                                  style: subtitleStyle,
                                 ),
                               ],
                             )

@@ -71,7 +71,7 @@ Widget buildLeftChild(String time) {
     padding: const EdgeInsets.all(8.0),
     child: Text(
       time,
-      style: normalStyle.copyWith(color: Colors.black),
+      style: normalStyle,
     ),
   );
 }

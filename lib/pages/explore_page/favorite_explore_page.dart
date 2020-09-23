@@ -77,7 +77,7 @@ class FavoriteExplorePage extends StatelessWidget {
                     width: double.infinity,
                     height: 90,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Padding(
@@ -102,7 +102,7 @@ class FavoriteExplorePage extends StatelessWidget {
                               SizedBox(height: 10),
                               Text(
                                 list[index].name,
-                                style: titleStyle.copyWith(color: Colors.black),
+                                style: titleStyle,
                               ),
                               SizedBox(height: 10),
                               Row(

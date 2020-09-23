@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/circle_image.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
-import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/sign_in_page/sign_in_page.dart';
 
@@ -18,7 +17,7 @@ class SignUpPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Create an Account",
-          style: titleStyle.copyWith(color: AppColor.black),
+          style: titleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
         leading: IconButton(
@@ -29,7 +28,7 @@ class SignUpPage extends StatelessWidget {
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: AppColor.grey,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: SizedBox(
@@ -52,7 +51,7 @@ class SignUpPage extends StatelessWidget {
                 SizedBox(height: 40),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: phone,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -87,7 +86,7 @@ class SignUpPage extends StatelessWidget {
                 SizedBox(height: 30),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: email,
                   decoration: InputDecoration(
                     prefixIcon: Icon(
@@ -121,7 +120,7 @@ class SignUpPage extends StatelessWidget {
                 SizedBox(height: 30),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: password,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -156,7 +155,6 @@ class SignUpPage extends StatelessWidget {
                 SizedBox(height: 50),
                 DefaultButton(
                   height: 56,
-                  color: AppColor.blue,
                   title: "Sign up",
                   onPressed: () {
                     if (formKey.currentState.validate()) {
@@ -185,7 +183,7 @@ class SignUpPage extends StatelessWidget {
                       },
                       child: Text(
                         "Login here",
-                        style: normalStyle.copyWith(color: AppColor.black),
+                        style: normalStyle,
                       ),
                     )
                   ],

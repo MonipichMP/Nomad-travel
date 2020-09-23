@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
-import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/main_page/main_page.dart';
 
@@ -22,7 +21,7 @@ class ForgotPasswordPage extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
         automaticallyImplyLeading: true,
-        backgroundColor: AppColor.grey,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
       ),
       body: SizedBox(
@@ -38,17 +37,17 @@ class ForgotPasswordPage extends StatelessWidget {
                 SizedBox(height: 100),
                 Text(
                   "Forgot Password?",
-                  style: titleStyle.copyWith(color: AppColor.black),
+                  style: titleStyle,
                 ),
                 SizedBox(height: 10),
                 Text(
                   "Enter your phone number below to receive \nyour password reset instruction",
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                 ),
                 SizedBox(height: 50),
                 TextFormField(
                   textAlignVertical: TextAlignVertical.center,
-                  style: normalStyle.copyWith(color: AppColor.black),
+                  style: normalStyle,
                   controller: phone,
                   cursorColor: Colors.grey,
                   decoration: InputDecoration(
@@ -83,7 +82,6 @@ class ForgotPasswordPage extends StatelessWidget {
                 SizedBox(height: 50),
                 DefaultButton(
                   height: 56,
-                  color: Colors.grey,
                   title: "Reset Password",
                   onPressed: () {
                     if (formKey.currentState.validate()) {

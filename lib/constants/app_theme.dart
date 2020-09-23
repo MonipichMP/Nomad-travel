@@ -5,9 +5,11 @@ class AppTheme {
   get darkTheme => ThemeData(
         brightness: Brightness.dark,
         fontFamily: "Roboto",
-        primaryColor: AppColor.black,
+        primaryColor: AppColor.white,
+        cardColor: AppColor.blackBackground,
         accentColor: AppColor.white,
-        scaffoldBackgroundColor: AppColor.grey,
+        buttonColor: AppColor.orange,
+        scaffoldBackgroundColor: AppColor.black,
         accentIconTheme: IconThemeData(color: Colors.white),
       );
 
@@ -15,8 +17,10 @@ class AppTheme {
         brightness: Brightness.light,
         fontFamily: "Roboto",
         primaryColor: AppColor.black,
+        cardColor: AppColor.white,
         accentColor: AppColor.white,
-        scaffoldBackgroundColor: AppColor.blackBackground,
+        buttonColor: AppColor.blue,
+        scaffoldBackgroundColor: AppColor.white,
         accentIconTheme: IconThemeData(color: Colors.black),
       );
 }

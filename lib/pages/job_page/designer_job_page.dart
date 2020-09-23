@@ -453,7 +453,6 @@ class _DesignerJobPageState extends State<DesignerJobPage> {
                                 SizedBox(height: 20),
                                 DefaultButton(
                                   height: 46,
-                                  color: AppColor.blue,
                                   title: "Submit",
                                   onPressed: () => Navigator.pop(context),
                                 )

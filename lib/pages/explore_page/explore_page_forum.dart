@@ -154,7 +154,7 @@ class _MainForumsState extends State<MainForums> {
                       width: double.infinity,
                       height: 120,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(
@@ -191,9 +191,7 @@ class _MainForumsState extends State<MainForums> {
                                   padding: EdgeInsets.only(right: 8.0),
                                   child: Text(
                                     forumDataStatic[index]['question'],
-                                    style: titleStyle.copyWith(
-                                      color: Colors.black,
-                                    ),
+                                    style: titleStyle,
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
                                   ),

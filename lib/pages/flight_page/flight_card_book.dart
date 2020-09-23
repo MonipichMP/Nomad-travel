@@ -223,7 +223,6 @@ class _FlightCardBookState extends State<FlightCardBook> {
                                   SizedBox(height: 200),
                                   DefaultButton(
                                     height: 56,
-                                    color: AppColor.blue,
                                     title: "Book Your Trip",
                                     onPressed: () =>
                                         Navigator.of(context).pop(),

@@ -26,7 +26,6 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: menuScreens.elementAt(index),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
         showSelectedLabels: true,
         showUnselectedLabels: false,
         currentIndex: index,

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/common_widgets/circle_image.dart';
 import 'package:nomad_travel/common_widgets/orange_backpack.dart';
-import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
+import 'package:nomad_travel/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class SplashContent extends StatelessWidget {
   final String title;
@@ -20,27 +21,49 @@ class SplashContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    var isDark = Provider.of<ThemeProvider>(context);
+    var themeProvider = Provider.of<ThemeProvider>(context);
+
     return Padding(
       padding: EdgeInsets.all(8.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          OrangeBackpack(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OrangeBackpack(),
+              Switch(
+                value: isDark.getIsDark(),
+                onChanged: (value) {
+                  if (themeProvider.getThemeMode() == ThemeMode.light) {
+                    themeProvider.setThemeMode(ThemeMode.dark);
+                  } else {
+                    themeProvider.setThemeMode(ThemeMode.light);
+                  }
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .setIsDark(value);
+                },
+                activeTrackColor: Theme.of(context).primaryColor,
+              ),
+            ],
+          ),
           SizedBox(height: 20),
           Text(
             title,
-            style: titleStyle.copyWith(color: AppColor.black),
+            style: titleStyle,
           ),
           SizedBox(height: 20),
           Text(
             description,
-            style: normalStyle.copyWith(color: AppColor.black),
+            style: normalStyle,
           ),
           SizedBox(height: 5),
           Text(
             description2,
-            style: normalStyle.copyWith(color: AppColor.black),
+            style: normalStyle,
           ),
           SizedBox(height: 40),
           Container(

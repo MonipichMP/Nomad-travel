@@ -24,18 +24,18 @@ class _FlightPageState extends State<FlightPage> {
               children: [
                 DropdownButton<String>(
                   value: dropdownValue,
-                  icon: Icon(Icons.keyboard_arrow_down, color: Colors.black),
+                  icon: Icon(Icons.keyboard_arrow_down, color: Theme.of(context).primaryColor),
                   elevation: 0,
                   style: TextStyle(
                     fontSize: 24,
-                    color: Colors.black,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                   underline: Container(
                     height: 2,
                     color: Colors.transparent,
                   ),
-                  dropdownColor: Colors.white,
+                  dropdownColor: Theme.of(context).scaffoldBackgroundColor,
                   items: <String>["Return", "Go"]
                       .map<DropdownMenuItem<String>>((value) {
                     return DropdownMenuItem<String>(

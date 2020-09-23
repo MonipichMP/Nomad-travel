@@ -77,7 +77,6 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
                   Spacer(flex: 2),
                   DefaultButton(
                     height: 56,
-                    color: AppColor.blue,
                     title: "Get Started",
                     onPressed: () {
                       Navigator.push(
@@ -106,7 +105,7 @@ class _WalkThroughPageState extends State<WalkThroughPage> {
       width: currentIndex == index ? 20 : 6,
       decoration: BoxDecoration(
         color:
-            currentIndex == index ? AppColor.blackBackground : AppColor.white,
+            currentIndex == index ? AppColor.blackBackground : Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(3),
       ),
     );
