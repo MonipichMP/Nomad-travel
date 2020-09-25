@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/constants/app_theme.dart';
-import 'package:nomad_travel/pages/walk_through_page/walk_through_page.dart';
+import 'package:nomad_travel/pages/main_page/main_page.dart';
 import 'package:nomad_travel/providers/menu_index_notifier.dart';
 import 'package:nomad_travel/providers/theme_provider.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 void main() =>
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ThemeProvider(ThemeMode.system),
+      create: (_) => ThemeProvider(ThemeMode.light),
       child: MyApp(),
     ),
   );
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         theme: AppTheme().lightTheme,
         darkTheme: AppTheme().darkTheme,
         themeMode: themeProvider.getThemeMode(),
-        home: WalkThroughPage(),
+        home: MainPage(),
       ),
     );
   }

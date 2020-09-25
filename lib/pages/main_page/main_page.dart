@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/constants/colors.dart';
 import 'package:nomad_travel/constants/style.dart';
+import 'package:nomad_travel/pages/charts_page/charts_page.dart';
 import 'package:nomad_travel/pages/explore_page/explore_page.dart';
 import 'package:nomad_travel/pages/flight_page/flight_page.dart';
 import 'package:nomad_travel/pages/job_page/job_page.dart';
@@ -19,6 +20,7 @@ class _MainPageState extends State<MainPage> {
     MapPage(),
     FlightPage(),
     JobPage(),
+    ChartPage(),
   ];
 
   @override
@@ -97,6 +99,21 @@ class _MainPageState extends State<MainPage> {
                     Icons.work,
                     color: Colors.grey,
                   ),
+          ),
+          BottomNavigationBarItem(
+            title: index == 4
+                ? Text(
+              "Chart\n•",
+              style: captionStyle.copyWith(color: AppColor.orange),
+              textAlign: TextAlign.center,
+            )
+                : Text(""),
+            icon: index == 4
+                ? Container(height: 0.0)
+                : Icon(
+              Icons.insert_chart,
+              color: Colors.grey,
+            ),
           ),
         ],
       ),
