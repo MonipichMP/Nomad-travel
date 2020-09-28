@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:nomad_travel/common_widgets/data_table_custom.dart';
 import 'package:nomad_travel/common_widgets/default_button.dart';
+import 'package:nomad_travel/common_widgets/table_data/cell_dimension.dart';
+import 'package:nomad_travel/common_widgets/table_data/sticky_custom.dart';
+import 'package:nomad_travel/common_widgets/table_data/table_cell_sticky.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:nomad_travel/model/favorite_model.dart';
+import 'package:nomad_travel/model/money_rate.dart';
 import 'package:nomad_travel/model/report.dart';
+import 'package:nomad_travel/model/support_party.dart';
+import 'package:nomad_travel/pages/charts_page/hor_chart_2.dart';
 import 'package:nomad_travel/pages/charts_page/hoz_chart.dart';
 
 class BarCharts extends StatefulWidget {
@@ -63,6 +70,17 @@ class _BarChartsState extends State<BarCharts> {
     ),
   ];
 
+  final List<MoneyRate> moneyRateData = [
+    MoneyRate(DateTime(2020), 4010),
+    MoneyRate(DateTime(2020, 2), 4021),
+    MoneyRate(DateTime(2020, 3), 4045),
+    MoneyRate(DateTime(2020, 4), 4063),
+    MoneyRate(DateTime(2020, 5), 4000),
+    MoneyRate(DateTime(2020, 6), 4007),
+    MoneyRate(DateTime(2020, 7), 4015),
+    MoneyRate(DateTime(2020, 8), 4015),
+  ];
+
   final List<ReportSummary> summaryData = [
     ReportSummary(
       "2020",
@@ -83,6 +101,43 @@ class _BarChartsState extends State<BarCharts> {
       905.87,
     ),
   ];
+
+  final List<SupportParty> supportPartyData = [
+    SupportParty(2003, 23.96),
+    SupportParty(2007, 62.22),
+    SupportParty(2008, 52.65),
+    SupportParty(2012, 48.07),
+    SupportParty(2013, 31.32),
+    SupportParty(2017, 46.08),
+    SupportParty(2018, 74.8),
+  ];
+
+  List<String> _makeTitleColumn() => List.generate(5, (i) {
+        switch (i) {
+          case 0:
+            {
+              return "អាយុ ១៨\nឆ្នំាឡើង​​";
+            }
+          case 1:
+            {
+              return "នៅក្នុងបញ្ជី\nគ.ជ.ប​​";
+            }
+          case 2:
+            {
+              return "សមាជិក\nCPP​​";
+            }
+          case 3:
+            {
+              return "សន្លឹកឆ្នោត\nបានការ​";
+            }
+          case 4:
+            {
+              return "សន្លឹកឆ្នោត\nCPP​";
+            }
+        }
+        return '';
+      });
+  List<int> _makeTitleContent = [6178, 5414, 3093, 4032, 3016];
 
   @override
   Widget build(BuildContext context) {
@@ -110,6 +165,15 @@ class _BarChartsState extends State<BarCharts> {
         data: list,
         domainFn: (Favorite fav, _) => fav.id,
         measureFn: (Favorite fav, _) => fav.reviewers,
+      )
+    ];
+
+    List<charts.Series<MoneyRate, DateTime>> moneyRate = [
+      charts.Series(
+        id: "id3",
+        data: moneyRateData,
+        domainFn: (MoneyRate data, _) => data.month,
+        measureFn: (MoneyRate data, _) => data.rate,
       )
     ];
 
@@ -141,6 +205,39 @@ class _BarChartsState extends State<BarCharts> {
           domainFn: (ReportSummary data, _) => data.name,
           measureFn: (ReportSummary data, _) => data.value,
           labelAccessorFn: (ReportSummary data, _) => '\$${data.percent}')
+    ];
+
+    List<charts.Series<SupportParty, String>> supportFanParty = [
+      charts.Series(
+          id: "id5",
+          data: supportPartyData,
+          colorFn: (SupportParty data, _) {
+            switch (data.year) {
+              case 2003:
+              case 2008:
+              case 2012:
+                {
+                  return charts.Color(r: 240, g: 10, b: 0);
+                }
+              case 2007:
+              case 2013:
+                {
+                  return charts.Color(b: 240, r: 0, g: 120);
+                }
+              case 2017:
+              case 2018:
+                {
+                  return charts.Color(g: 240, r: 0, b: 0);
+                }
+              default:
+                {
+                  return charts.Color(r: 255, g: 0, b: 0);
+                }
+            }
+          },
+          domainFn: (SupportParty data, _) => data.year.toString(),
+          measureFn: (SupportParty data, _) => data.percent,
+          labelAccessorFn: (SupportParty data, _) => '${data.percent}%')
     ];
 
     return Padding(
@@ -185,31 +282,31 @@ class _BarChartsState extends State<BarCharts> {
                     height: 200,
                     padding: EdgeInsets.all(8),
                     color: Theme.of(context).scaffoldBackgroundColor,
-                    child: AbsorbPointer(
-                      absorbing: true,
-                      child: charts.BarChart(
-                        summaryIncome,
-                        animate: true,
-                        barRendererDecorator: charts.BarLabelDecorator<String>(
-                          labelPadding: 3,
-                          outsideLabelStyleSpec: charts.TextStyleSpec(
-                            fontSize: 7,
-                          ),
+                    child: charts.BarChart(
+                      summaryIncome,
+                      animate: true,
+                      defaultInteractions: false,
+                      barRendererDecorator: charts.BarLabelDecorator<String>(
+                        labelPadding: 3,
+                        outsideLabelStyleSpec: charts.TextStyleSpec(
+                          fontSize: 7,
                         ),
-                        domainAxis: charts.OrdinalAxisSpec(
-                          showAxisLine: true,
+                      ),
+                      domainAxis: charts.OrdinalAxisSpec(
+                        showAxisLine: true,
+                      ),
+                      primaryMeasureAxis: charts.NumericAxisSpec(
+                        tickProviderSpec: charts.StaticNumericTickProviderSpec(
+                          [
+                            charts.TickSpec(0),
+                            charts.TickSpec(1000),
+                            charts.TickSpec(2000),
+                            charts.TickSpec(3000),
+                            charts.TickSpec(4000),
+                            charts.TickSpec(5000),
+                            charts.TickSpec(6000)
+                          ],
                         ),
-                        primaryMeasureAxis: charts.NumericAxisSpec(
-                            tickProviderSpec:
-                                charts.StaticNumericTickProviderSpec([
-                          charts.TickSpec(0),
-                          charts.TickSpec(1000),
-                          charts.TickSpec(2000),
-                          charts.TickSpec(3000),
-                          charts.TickSpec(4000),
-                          charts.TickSpec(5000),
-                          charts.TickSpec(6000)
-                        ])),
                       ),
                     ),
                   ),
@@ -227,7 +324,169 @@ class _BarChartsState extends State<BarCharts> {
                   ),
                 ),
               ),
-            )
+            ),
+            SizedBox(height: 10),
+            Center(
+              child: DefaultButton(
+                height: 56,
+                title: "Hoz table 2222 Check !",
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => HozChart2(),
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 10),
+            Card(
+              elevation: 10,
+              child: Column(
+                children: [
+                  Text(
+                    "ការបោះឆ្នោតគាំទ្រ ២០២០​",
+                    style: titleStyle.copyWith(color: Colors.grey),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 200,
+                    padding: EdgeInsets.all(8),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: charts.BarChart(
+                      supportFanParty,
+                      animate: true,
+                      defaultInteractions: false,
+                      barRendererDecorator: charts.BarLabelDecorator<String>(
+                        labelPadding: 3,
+                        outsideLabelStyleSpec: charts.TextStyleSpec(
+                          fontSize: 7,
+                        ),
+                      ),
+                      domainAxis: charts.OrdinalAxisSpec(
+                        showAxisLine: true,
+                      ),
+                      primaryMeasureAxis: charts.NumericAxisSpec(
+                        tickProviderSpec: charts.StaticNumericTickProviderSpec(
+                          [
+                            charts.TickSpec(0),
+                            charts.TickSpec(10),
+                            charts.TickSpec(20),
+                            charts.TickSpec(30),
+                            charts.TickSpec(40),
+                            charts.TickSpec(50),
+                            charts.TickSpec(60),
+                            charts.TickSpec(70),
+                            charts.TickSpec(80)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Card(
+              elevation: 10,
+              child: Column(
+                children: [
+                  Text(
+                    "ទិន្នន័យអ្នកបោះឆ្នោត ឆ្នាំ ២០២០​",
+                    style: titleStyle.copyWith(color: Colors.black),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    margin: EdgeInsets.all(8),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: DataTableCustom(
+                      columnsLength: 5,
+                      cellDimensions: const CellDimensions(
+                        contentCellWidth: 70.0,
+                        contentCellHeight: 50.0,
+                        stickyLegendWidth: 0.0,
+                        stickyLegendHeight: 0.0,
+                      ),
+                      columnsTitleBuilder: (i) => Text(
+                        _makeTitleColumn()[i],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      contentsTitleBuilder: (i) => Text(
+                        _makeTitleContent[i].toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    margin: EdgeInsets.all(8),
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    child: DataTableCustom(
+                      columnsLength: 2,
+                      cellDimensions: const CellDimensions(
+                        contentCellWidth: 175.0,
+                        contentCellHeight: 50.0,
+                        stickyLegendWidth: 0.0,
+                        stickyLegendHeight: 0.0,
+                      ),
+                      columnsTitleBuilder: (i) => Text(
+                        _makeTitleColumn()[i],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      contentsTitleBuilder: (i) => Text(
+                        _makeTitleContent[i].toString(),
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 10),
+            Text(
+              "អត្រាប្តូរប្រាក់",
+              style: titleStyle.copyWith(color: Colors.black),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: 200,
+              color: Theme.of(context).scaffoldBackgroundColor,
+              child: charts.TimeSeriesChart(
+                moneyRate,
+                animate: true,
+                defaultRenderer: charts.LineRendererConfig(includePoints: true),
+                primaryMeasureAxis: charts.NumericAxisSpec(
+                  tickProviderSpec: charts.StaticNumericTickProviderSpec(
+                    [
+                      charts.TickSpec(4000),
+                      charts.TickSpec(4010),
+                      charts.TickSpec(4020),
+                      charts.TickSpec(4030),
+                      charts.TickSpec(4040),
+                      charts.TickSpec(4050),
+                      charts.TickSpec(4060),
+                      charts.TickSpec(4070),
+                      charts.TickSpec(4080),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,28 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:nomad_travel/common_widgets/table_data/sync_scroll_controller.dart';
+
+import 'cell_dimension.dart';
+
+/// This was copied from library name: Sticky Header Table
+/// But I customized them to fit with requirements
 
 /// Table with sticky headers. Whenever you scroll content horizontally
 /// or vertically - top and left headers always stay.
-class StickyHeadersTable extends StatefulWidget {
-  StickyHeadersTable({
+class StickyHeadersTableCustom extends StatefulWidget {
+  StickyHeadersTableCustom({
     Key key,
+
+    /// Number of top Columns above columns wrap it into categories (for content only)
+    @required this.topColumnsLength,
 
     /// Number of Columns (for content only)
     @required this.columnsLength,
-    @required this.topColumnsLength,
 
     /// Number of Rows (for content only)
     @required this.rowsLength,
 
-    /// Top Title for Top Left cell (always visible)
-    this.topLegendCell = const Text(' '),
-
-    /// Title for Top Left cell (always visible)
-    this.legendCell = const Text(' '),
+    /// Builder for top column titles. Takes index of content top column as parameter
+    /// and returns String for top column title
+    this.topColumnsTitleBuilder,
 
     /// Builder for column titles. Takes index of content column as parameter
     /// and returns String for column title
     @required this.columnsTitleBuilder,
-    @required this.topColumnsTitleBuilder,
 
     /// Builder for row titles. Takes index of content row as parameter
     /// and returns String for row title
@@ -32,16 +37,28 @@ class StickyHeadersTable extends StatefulWidget {
     /// index for content row second and returns String for cell
     @required this.contentCellBuilder,
 
+    /// Top Title for Top Left cell (always visible)
+    this.topLegendCell = const Text(' '),
+
+    /// Title for Left cell (always visible)
+    this.legendCell = const Text(' '),
+
     /// Table cell dimensions
     this.cellDimensions = CellDimensions.base,
 
     /// Type of fit for content
     this.cellFit = BoxFit.scaleDown,
+
+    // /// elevation on row or column scroll
+    // this.elevation = 0.0,
+    //
+    // /// color of elevation
+    // this.elevationColor = Colors.black54,
   }) : super(key: key) {
     assert(columnsLength != null);
     assert(rowsLength != null);
     assert(columnsTitleBuilder != null);
-    assert(rowsTitleBuilder != null);
+    // assert(rowsTitleBuilder != null);
     assert(contentCellBuilder != null);
   }
 
@@ -57,26 +74,30 @@ class StickyHeadersTable extends StatefulWidget {
   final CellDimensions cellDimensions;
   final BoxFit cellFit;
 
+  // final double elevation;
+  // final Color elevationColor;
+
   @override
-  _StickyHeadersTableState createState() => _StickyHeadersTableState();
+  _StickyHeadersTableCustomState createState() =>
+      _StickyHeadersTableCustomState();
 }
 
-class _StickyHeadersTableState extends State<StickyHeadersTable> {
+class _StickyHeadersTableCustomState extends State<StickyHeadersTableCustom> {
   final ScrollController _verticalTitleController = ScrollController();
   final ScrollController _verticalBodyController = ScrollController();
 
   final ScrollController _horizontalBodyController = ScrollController();
   final ScrollController _horizontalTitleController = ScrollController();
 
-  _SyncScrollController _verticalSyncController;
-  _SyncScrollController _horizontalSyncController;
+  SyncScrollController _verticalSyncController;
+  SyncScrollController _horizontalSyncController;
 
   @override
   void initState() {
     super.initState();
-    _verticalSyncController = _SyncScrollController(
+    _verticalSyncController = SyncScrollController(
         [_verticalTitleController, _verticalBodyController]);
-    _horizontalSyncController = _SyncScrollController(
+    _horizontalSyncController = SyncScrollController(
         [_horizontalTitleController, _horizontalBodyController]);
   }
 
@@ -115,12 +136,13 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                   NotificationListener<ScrollNotification>(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
+                      physics: NeverScrollableScrollPhysics(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(
                           widget.topColumnsLength,
                           (i) => Container(
-                            width: widget.cellDimensions.contentCellWidth,
+                            width: widget.cellDimensions.contentCellWidth * 4,
                             height: widget.cellDimensions.stickyLegendHeight,
                             child: FittedBox(
                               fit: widget.cellFit,
@@ -140,6 +162,7 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
                   NotificationListener<ScrollNotification>(
                     child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
+                      physics: NeverScrollableScrollPhysics(),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(
@@ -249,68 +272,4 @@ class _StickyHeadersTableState extends State<StickyHeadersTable> {
   }
 }
 
-/// Dimensions for table
-class CellDimensions {
-  const CellDimensions({
-    /// Content cell width. It also applied to sticky row width.
-    @required this.contentCellWidth,
 
-    /// Content cell height. It also applied to sticky column height.
-    @required this.contentCellHeight,
-
-    /// Sticky legend width. It also applied to sticky column width.
-    @required this.stickyLegendWidth,
-
-    /// Sticky legend height/ It also applied to sticky row height.
-    @required this.stickyLegendHeight,
-  });
-
-  final double contentCellWidth;
-  final double contentCellHeight;
-  final double stickyLegendWidth;
-  final double stickyLegendHeight;
-
-  static const CellDimensions base = CellDimensions(
-    contentCellWidth: 90.0,
-    contentCellHeight: 50.0,
-    stickyLegendWidth: 160.0,
-    stickyLegendHeight: 50.0,
-  );
-}
-
-/// SyncScrollController keeps scroll controllers in sync.
-class _SyncScrollController {
-  _SyncScrollController(List<ScrollController> controllers) {
-    controllers
-        .forEach((controller) => _registeredScrollControllers.add(controller));
-  }
-
-  final List<ScrollController> _registeredScrollControllers = [];
-
-  ScrollController _scrollingController;
-  bool _scrollingActive = false;
-
-  processNotification(
-      ScrollNotification notification, ScrollController sender) {
-    if (notification is ScrollStartNotification && !_scrollingActive) {
-      _scrollingController = sender;
-      _scrollingActive = true;
-      return;
-    }
-
-    if (identical(sender, _scrollingController) && _scrollingActive) {
-      if (notification is ScrollEndNotification) {
-        _scrollingController = null;
-        _scrollingActive = false;
-        return;
-      }
-
-      if (notification is ScrollUpdateNotification) {
-        for (ScrollController controller in _registeredScrollControllers) {
-          if (identical(_scrollingController, controller)) continue;
-          controller.jumpTo(_scrollingController.offset);
-        }
-      }
-    }
-  }
-}

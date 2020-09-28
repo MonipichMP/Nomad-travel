@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/charts_page/bar_charts.dart';
 import 'package:nomad_travel/pages/charts_page/hoz_chart.dart';
+import 'package:nomad_travel/pages/charts_page/web_view_page.dart';
 
 class ChartPage extends StatefulWidget {
   @override
@@ -30,7 +31,7 @@ class _ChartPageState extends State<ChartPage> {
           dropdownColor: Theme.of(context).scaffoldBackgroundColor,
           items: <String>[
             "bar",
-            "hoz",
+            "web",
           ].map<DropdownMenuItem<String>>((value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -54,9 +55,10 @@ class _ChartPageState extends State<ChartPage> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             if (dropdownValue == "bar") BarCharts(),
-            if (dropdownValue == "hoz") HozChart(),
+            if (dropdownValue == "web") WebViewPage(),
           ],
         ),
       ),
