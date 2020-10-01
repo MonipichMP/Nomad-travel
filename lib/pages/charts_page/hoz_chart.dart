@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nomad_travel/common_widgets/table_data/cell_dimension.dart';
-import 'package:nomad_travel/common_widgets/table_data/sticky_custom.dart';
-import 'package:nomad_travel/common_widgets/table_data/table_cell_sticky.dart';
-
+import 'dart:math';
+import 'package:nomad_travel/helper/table_data_custom/sticky_custom.dart';
+import 'package:nomad_travel/helper/table_data_custom/table_cell_sticky.dart';
 class HozChart extends StatefulWidget {
   @override
   _HozChartState createState() => _HozChartState();
@@ -16,15 +15,17 @@ class _HozChartState extends State<HozChart> {
 
   List<List<String>> _makeData() {
     final List<List<String>> output = [];
+    Random random = Random();
     for (int i = 0; i < columns; i++) {
       final List<String> row = [];
       for (int j = 0; j < rows; j++) {
-        row.add('T$i : L$j');
+        row.add(random.nextInt(4000).toString());
       }
       output.add(row);
     }
     return output;
   }
+
 
   List<String> _makeTitleColumn() => List.generate(columns, (i) {
         switch (i % 4) {
@@ -124,16 +125,16 @@ class _HozChartState extends State<HozChart> {
             rowsLength: rows,
             topColumnsTitleBuilder: (i) => TableCellCustom.topStickyRow(
               _makeTopTitleColumn()[i],
-              textStyle: TextStyle(fontSize: 6),
+              textStyle: TextStyle(fontSize: 4),
               colorBg: Colors.white,
             ),
             columnsTitleBuilder: (i) => TableCellCustom.stickyRow(
               _makeTitleColumn()[i],
-              textStyle: TextStyle(color: Colors.white, fontSize: 14),
+              textStyle: TextStyle(color: Colors.white, fontSize: 10),
             ),
             rowsTitleBuilder: (i) => TableCellCustom.stickyColumn(
               _makeTitleRow[i],
-              textStyle: TextStyle(fontSize: 12),
+              textStyle: TextStyle(fontSize: 9),
               colorBg: i % 2 == 0 ? Colors.white : Colors.grey[300],
             ),
             contentCellBuilder: (i, j) => TableCellCustom.content(

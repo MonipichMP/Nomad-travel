@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nomad_travel/common_widgets/table_data/cell_dimension.dart';
+import 'package:nomad_travel/helper/table_data_custom/sticky_custom.dart';
 
 class TableCellCustom extends StatelessWidget {
   TableCellCustom.content(

@@ -16,7 +16,7 @@ class _WebViewPageState extends State<WebViewPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600,
+      height: MediaQuery.of(context).size.height * 0.83,
       child: WebView(
         key: _key,
         initialUrl: "https://blog.mindorks.com",
