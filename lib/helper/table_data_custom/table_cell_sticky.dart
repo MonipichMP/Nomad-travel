@@ -9,8 +9,6 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = Colors.white,
     this.onTap,
     this.alignment = Alignment.center,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.contentCellWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.black38,
@@ -25,8 +23,6 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = Colors.white,
     this.onTap,
     this.alignment = Alignment.center,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.stickyLegendWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.black38,
@@ -41,8 +37,6 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = const Color(0xFF2bba1d),
     this.onTap,
     this.alignment = Alignment.center,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.stickyLegendWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.white,
@@ -57,8 +51,6 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = const Color(0xFF2bba1d),
     this.onTap,
     this.alignment = Alignment.center,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.stickyLegendWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.black38,
@@ -73,8 +65,6 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = const Color(0xFF2bba1d),
     this.onTap,
     this.alignment = Alignment.center,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.stickyLegendWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.white,
@@ -89,12 +79,10 @@ class TableCellCustom extends StatelessWidget {
     this.colorBg = Colors.white,
     this.onTap,
     this.alignment = Alignment.centerLeft,
-    this.offsetX = 0.0,
-    this.offsetY = 0.0,
   })  : cellWidth = cellDimensions.stickyLegendWidth,
         cellHeight = cellDimensions.contentCellHeight,
         _colorHorizontalBorder = Colors.black38,
-        _colorVerticalBorder = Colors.black38,
+        _colorVerticalBorder = Colors.white,
         _textAlign = TextAlign.center,
         _padding = EdgeInsets.zero;
 
@@ -103,8 +91,6 @@ class TableCellCustom extends StatelessWidget {
   final Function onTap;
   final double cellWidth;
   final double cellHeight;
-  final double offsetX;
-  final double offsetY;
   final Color colorBg;
   final Color _colorHorizontalBorder;
   final Color _colorVerticalBorder;
@@ -143,7 +129,7 @@ class TableCellCustom extends StatelessWidget {
                 child: Text(
                   text,
                   style: textStyle,
-                  maxLines: 1,
+                  maxLines: 2,
                   textAlign: _textAlign,
                 ),
               ),

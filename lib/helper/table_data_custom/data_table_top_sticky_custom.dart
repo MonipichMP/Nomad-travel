@@ -9,11 +9,14 @@ class DataTableTopStickyCustom extends StatefulWidget {
   final BoxFit cellFit;
   final Widget legendCell;
   final Widget topLegendCell;
+  final Widget secondLegendCell;
+  final Widget secondTopLegendCell;
   final CellDimensions cellDimensions;
   final Widget Function(int colulmnIndex) topColumnsTitleBuilder;
   final Widget Function(int colulmnIndex) secondTopColumnsTitleBuilder;
   final Widget Function(int colulmnIndex) columnsTitleBuilder;
   final Widget Function(int colulmnIndex) rowsTitleBuilder;
+  final Widget Function(int colulmnIndex) secondRowsTitleBuilder;
   final Widget Function(int colulmnIndex, int rowIndex) contentsTitleBuilder;
 
   const DataTableTopStickyCustom({
@@ -24,10 +27,13 @@ class DataTableTopStickyCustom extends StatefulWidget {
     @required this.rowsLength,
     @required this.legendCell,
     @required this.topLegendCell,
+    @required this.secondLegendCell,
+    @required this.secondTopLegendCell,
     @required this.topColumnsTitleBuilder,
     @required this.secondTopColumnsTitleBuilder,
     @required this.columnsTitleBuilder,
     @required this.rowsTitleBuilder,
+    @required this.secondRowsTitleBuilder,
     @required this.contentsTitleBuilder,
     @required this.cellDimensions,
     this.cellFit = BoxFit.scaleDown,
@@ -71,19 +77,37 @@ class _DataTableTopStickyCustomState extends State<DataTableTopStickyCustom> {
                   /// STICKY COLUMN
                   NotificationListener<ScrollNotification>(
                     child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: List.generate(
-                          widget.rowsLength,
-                          (i) => Container(
-                            width: widget.cellDimensions.stickyLegendWidth,
-                            height: widget.cellDimensions.contentCellHeight,
-                            child: FittedBox(
-                              fit: widget.cellFit,
-                              child: widget.rowsTitleBuilder(i),
+                      child: Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              widget.rowsLength,
+                                  (i) => Container(
+                                width: widget.cellDimensions.stickyLegendWidth,
+                                height: widget.cellDimensions.contentCellHeight,
+                                child: FittedBox(
+                                  fit: widget.cellFit,
+                                  child: widget.rowsTitleBuilder(i),
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: List.generate(
+                              widget.rowsLength,
+                                  (i) => Container(
+                                width: widget.cellDimensions.stickyLegendWidth,
+                                height: widget.cellDimensions.contentCellHeight,
+                                child: FittedBox(
+                                  fit: widget.cellFit,
+                                  child: widget.secondRowsTitleBuilder(i),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       controller: _verticalTitleController,
                     ),
@@ -157,23 +181,47 @@ class _DataTableTopStickyCustomState extends State<DataTableTopStickyCustom> {
           child: Row(
             children: <Widget>[
               /// STICKY LEGEND
-              Column(
+              Row(
                 children: [
-                  Container(
-                    width: widget.cellDimensions.stickyLegendWidth,
-                    height: widget.cellDimensions.stickyLegendHeight * 2,
-                    child: FittedBox(
-                      fit: widget.cellFit,
-                      child: widget.topLegendCell,
-                    ),
+                  Column(
+                    children: [
+                      Container(
+                        width: widget.cellDimensions.stickyLegendWidth,
+                        height: widget.cellDimensions.stickyLegendHeight * 2,
+                        child: FittedBox(
+                          fit: widget.cellFit,
+                          child: widget.topLegendCell,
+                        ),
+                      ),
+                      Container(
+                        width: widget.cellDimensions.stickyLegendWidth,
+                        height: widget.cellDimensions.stickyLegendHeight,
+                        child: FittedBox(
+                          fit: widget.cellFit,
+                          child: widget.legendCell,
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    width: widget.cellDimensions.stickyLegendWidth,
-                    height: widget.cellDimensions.stickyLegendHeight,
-                    child: FittedBox(
-                      fit: widget.cellFit,
-                      child: widget.legendCell,
-                    ),
+                  Column(
+                    children: [
+                      Container(
+                        width: widget.cellDimensions.stickyLegendWidth,
+                        height: widget.cellDimensions.stickyLegendHeight * 2,
+                        child: FittedBox(
+                          fit: widget.cellFit,
+                          child: widget.secondTopLegendCell,
+                        ),
+                      ),
+                      Container(
+                        width: widget.cellDimensions.stickyLegendWidth,
+                        height: widget.cellDimensions.stickyLegendHeight,
+                        child: FittedBox(
+                          fit: widget.cellFit,
+                          child: widget.secondLegendCell,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -225,7 +273,7 @@ class _DataTableTopStickyCustomState extends State<DataTableTopStickyCustom> {
                             widget.columnsLength,
                             (i) => Container(
                               width: widget.cellDimensions.contentCellWidth,
-                               height: widget.cellDimensions.stickyLegendHeight,
+                              height: widget.cellDimensions.stickyLegendHeight,
                               child: FittedBox(
                                 fit: widget.cellFit,
                                 child: widget.columnsTitleBuilder(i),

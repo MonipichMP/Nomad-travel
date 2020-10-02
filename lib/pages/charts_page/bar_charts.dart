@@ -279,17 +279,23 @@ class _BarChartsState extends State<BarCharts> {
                         showAxisLine: true,
                       ),
                       primaryMeasureAxis: charts.NumericAxisSpec(
-                        tickProviderSpec: charts.StaticNumericTickProviderSpec(
-                          [
-                            charts.TickSpec(0),
-                            charts.TickSpec(1000),
-                            charts.TickSpec(2000),
-                            charts.TickSpec(3000),
-                            charts.TickSpec(4000),
-                            charts.TickSpec(5000),
-                            charts.TickSpec(6000)
-                          ],
+                        renderSpec: charts.SmallTickRendererSpec(
+                          tickLengthPx: 0,
+                          labelOffsetFromAxisPx: 10,
                         ),
+                        tickProviderSpec: charts.BasicNumericTickProviderSpec(
+                            desiredTickCount: 7),
+                        // tickProviderSpec: charts.StaticNumericTickProviderSpec(
+                        //   [
+                        //     charts.TickSpec(0),
+                        //     charts.TickSpec(1000),
+                        //     charts.TickSpec(2000),
+                        //     charts.TickSpec(3000),
+                        //     charts.TickSpec(4000),
+                        //     charts.TickSpec(5000),
+                        //     charts.TickSpec(6000)
+                        //   ],
+                        // ),
                       ),
                     ),
                   ),
@@ -317,17 +323,16 @@ class _BarChartsState extends State<BarCharts> {
                       animate: true,
                       defaultInteractions: false,
                       barRendererDecorator: charts.BarLabelDecorator<String>(
-                        outsideLabelStyleSpec: charts.TextStyleSpec(
-                          fontSize: 12,
-                        ),
+                        labelPosition: charts.BarLabelPosition.outside
                       ),
+
+                      ///add behavior to be able to sliding view
                       behaviors: [
                         charts.SlidingViewport(),
                         charts.PanAndZoomBehavior(),
                       ],
                       domainAxis: charts.OrdinalAxisSpec(
-                        viewport: charts.OrdinalViewport("2003", 4)
-                      ),
+                          viewport: charts.OrdinalViewport("2003", 4)),
                       primaryMeasureAxis: charts.NumericAxisSpec(
                         tickProviderSpec: charts.StaticNumericTickProviderSpec(
                           [
@@ -442,18 +447,20 @@ class _BarChartsState extends State<BarCharts> {
                           charts.LineRendererConfig(includePoints: true),
                       domainAxis: charts.DateTimeAxisSpec(
                         ///define how to show specific data on domain
-                        tickProviderSpec: charts.StaticDateTimeTickProviderSpec(
-                          [
-                            charts.TickSpec(DateTime(2020, 1)),
-                            charts.TickSpec(DateTime(2020, 2)),
-                            charts.TickSpec(DateTime(2020, 3)),
-                            charts.TickSpec(DateTime(2020, 4)),
-                            charts.TickSpec(DateTime(2020, 5)),
-                            charts.TickSpec(DateTime(2020, 6)),
-                            charts.TickSpec(DateTime(2020, 7)),
-                            charts.TickSpec(DateTime(2020, 8)),
-                          ]
-                        ),
+                        // tickProviderSpec: charts.DayTickProviderSpec(
+                        //   increments: [31],
+                        // ),
+                        tickProviderSpec:
+                            charts.StaticDateTimeTickProviderSpec([
+                          charts.TickSpec(DateTime(2020, 1)),
+                          charts.TickSpec(DateTime(2020, 2)),
+                          charts.TickSpec(DateTime(2020, 3)),
+                          charts.TickSpec(DateTime(2020, 4)),
+                          charts.TickSpec(DateTime(2020, 5)),
+                          charts.TickSpec(DateTime(2020, 6)),
+                          charts.TickSpec(DateTime(2020, 7)),
+                          charts.TickSpec(DateTime(2020, 8)),
+                        ]),
                         tickFormatterSpec: charts.AutoDateTimeTickFormatterSpec(
                           month: charts.TimeFormatterSpec(
                               format: 'MMM', transitionFormat: "MMM"),
@@ -462,7 +469,7 @@ class _BarChartsState extends State<BarCharts> {
                       primaryMeasureAxis: charts.NumericAxisSpec(
                         renderSpec: charts.SmallTickRendererSpec(
                           tickLengthPx: -310,
-                          labelOffsetFromAxisPx: 10
+                          labelOffsetFromAxisPx: 10,
                         ),
                         tickProviderSpec: charts.StaticNumericTickProviderSpec(
                           [

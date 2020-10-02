@@ -12,24 +12,24 @@ class HozChartOriginal extends StatefulWidget {
 }
 
 class _HozChartOriginalState extends State<HozChartOriginal> {
-  final columns = 10;
-  final topColumns = 5;
-  final secondTopColumns = 10;
+  final columns = 8;
+  final topColumns = 4;
+  final secondTopColumns = 8;
   final rows = 20;
-  final List<List<int>> output = [];
+  final List<List<num>> output = [];
+  int total = 0;
 
-  List<List<int>> _makeData() {
+  List<List<num>> _makeData() {
     Random random = new Random();
-    final List<int> col = [];
     for (int i = 0; i < columns; i++) {
-      final List<int> row = [];
+      final List<num> row = [];
 
       for (int j = 0; j < rows; j++) {
-        // row.add(i);
-        // if (i == 0 && j < rows) {
+        if (i % 2 == 0) {
           row.add(random.nextInt(5000));
-        // }
-        // row.add(random.nextInt(1));
+        } else {
+          row.add(random.nextInt(100));
+        }
       }
       output.add(row);
     }
@@ -37,62 +37,102 @@ class _HozChartOriginalState extends State<HozChartOriginal> {
   }
 
   List<String> _makeTitleColumn() => List.generate(columns, (i) {
-        switch (i % 4) {
+        switch (i % 2) {
           case 0:
             {
               int data = 0;
               for (int j = 0; j < rows - 1; j++) {
-                data += output[j][0];
-                print(data);
+                data += output[i][j];
               }
               return "$data";
             }
           case 1:
             {
               int data = 0;
-              for (int j = 1; j < rows - 1; j++) {
-                data += output[j][0];
-                print(data);
+              int ave = 0;
+              for (int j = 0; j < rows - 1; j++) {
+                data += output[i][j];
               }
-              return "$data";
-            }
-          case 2:
-            {
-              return "%ផសស (ច្ប)​​";
-            }
-          case 3:
-            {
-              return "%ផសស (អនុ)​";
+              ave = (data / rows).floor();
+              return "$ave%";
             }
         }
         return '';
       });
 
-  List<String> _makeTopTitleColumn() => List.generate(secondTopColumns, (i) {
-        switch (i % 5) {
+  List<String> _makeTopTitleColumn() => List.generate(topColumns, (i) {
+        switch (i % 4) {
           case 0:
             {
-              return "ឆ្នាំ ២០០០​";
+              return "សមាជិក CPP​";
             }
           case 1:
             {
-              return "ឆ្នាំ ២០០៥​";
+              return "អ្នកចេញទៅបោះឆ្នោត​";
             }
           case 2:
             {
-              return "ឆ្នាំ ២០១០​";
+              return "សន្លឹកឆ្នោតបានការ​";
             }
           case 3:
             {
-              return "ឆ្នាំ ២០១៥​";
-            }
-          case 4:
-            {
-              return "ឆ្នាំ ២០២០​";
+              return "សន្លឹកឆ្នោត CPP​";
             }
         }
         return '';
       });
+
+  List<String> _makeSecondTopTitleColumn() =>
+      List.generate(secondTopColumns, (i) {
+        switch (i) {
+          case 0:
+            {
+              return "ចំនួន​";
+            }
+          case 1:
+            {
+              return "%នៃបញ្ជី\nគ.ជ.ប​​";
+            }
+          case 2:
+            {
+              return "ចំនួន​";
+            }
+          case 3:
+            {
+              return "%នៃបញ្ជី\nគ.ជ.ប​​";
+            }
+          case 4:
+            {
+              return "ចំនួន​";
+            }
+          case 5:
+            {
+              return "%នៃអ្នកទៅ\nបោះឆ្នោត​​";
+            }
+          case 6:
+            {
+              return "ចំនួន​";
+            }
+          case 7:
+            {
+              return "%នៃសមាជិក\nCPP​​";
+            }
+        }
+        return '';
+      });
+
+  List<int> _makeTitleSecondRow() => List.generate(rows, (i) {
+        Random random = Random();
+        return random.nextInt(10);
+      });
+
+  String _secondLegendCell() {
+    total = 0;
+    for (int i = 0; i < rows - 1; i++) {
+      total += _makeTitleSecondRow()[i];
+    }
+    return total.toString();
+  }
 
   List<String> _makeTitleRow = [
     "កោះរះ",
@@ -131,12 +171,33 @@ class _HozChartOriginalState extends State<HozChartOriginal> {
         return true;
       },
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            "ស្រុកល្វាម (2017)",
+            style: TextStyle(color: Colors.black),
+          ),
+          elevation: 0,
+          iconTheme: IconThemeData(color: Colors.black),
+          leading: IconButton(
+            onPressed: () {
+              SystemChrome.setPreferredOrientations([
+                DeviceOrientation.portraitUp,
+              ]);
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              size: 20,
+            ),
+          ),
+        ),
         body: SafeArea(
           child: DataTableTopStickyCustom(
             cellDimensions: const CellDimensions(
-                contentCellWidth: 100,
+                contentCellWidth: 120,
                 contentCellHeight: 50,
-                stickyLegendWidth: 100,
+                stickyLegendWidth: 120,
                 stickyLegendHeight: 50),
             cellFit: BoxFit.cover,
             topColumnsLength: topColumns,
@@ -145,10 +206,10 @@ class _HozChartOriginalState extends State<HozChartOriginal> {
             rowsLength: rows,
             topColumnsTitleBuilder: (i) => TableCellCustom.topStickyRow(
               _makeTopTitleColumn()[i],
-              textStyle: TextStyle(fontSize: 12, color: Colors.white),
+              textStyle: TextStyle(fontSize: 10, color: Colors.white),
             ),
-            secondTopColumnsTitleBuilder: (i) => TableCellCustom.topStickyRow(
-              _makeTopTitleColumn()[i],
+            secondTopColumnsTitleBuilder: (i) => TableCellCustom.stickyRow(
+              _makeSecondTopTitleColumn()[i],
               textStyle: TextStyle(fontSize: 12, color: Colors.white),
             ),
             columnsTitleBuilder: (i) => TableCellCustom.stickyRow(
@@ -156,26 +217,37 @@ class _HozChartOriginalState extends State<HozChartOriginal> {
               textStyle: TextStyle(fontSize: 12),
               colorBg: Colors.green[300],
             ),
-            rowsTitleBuilder: (i) => Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: TableCellCustom.stickyColumn(
-                _makeTitleRow[i],
-                textStyle: const TextStyle(fontSize: 14),
-                colorBg: i % 2 == 0 ? Colors.white : Colors.grey[300],
-              ),
+            rowsTitleBuilder: (i) => TableCellCustom.stickyColumn(
+              _makeTitleRow[i],
+              textStyle: const TextStyle(fontSize: 14),
+              colorBg: i % 2 == 0 ? Colors.white : Colors.grey[300],
+            ),
+            secondRowsTitleBuilder: (i) => TableCellCustom.content(
+              _makeTitleSecondRow()[i].toString(),
+              textStyle: const TextStyle(fontSize: 9),
+              colorBg: i % 2 == 0 ? Colors.white : Colors.grey[300],
             ),
             contentsTitleBuilder: (i, j) => TableCellCustom.content(
-              _makeData()[i][j].toString(),
-              textStyle: TextStyle(fontSize: 10),
+              i % 2 == 0 ? "${_makeData()[i][j]}" : "${_makeData()[i][j]}%",
+              textStyle: TextStyle(fontSize: 9),
               colorBg: j % 2 == 0 ? Colors.white : Colors.grey[300],
             ),
             topLegendCell: TableCellCustom.legend(
               "ឃំុ",
-              textStyle: TextStyle(color: Colors.white, fontSize: 16),
+              textStyle: TextStyle(color: Colors.white, fontSize: 14),
             ),
             legendCell: TableCellCustom.legend(
               "សរុប",
               textStyle: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+            secondTopLegendCell: TableCellCustom.legend(
+              "ក្នុងបញ្ជី\nគ.ជ.ប",
+              textStyle: TextStyle(color: Colors.white, fontSize: 10),
+            ),
+            secondLegendCell: TableCellCustom.legend(
+              _secondLegendCell(),
+              textStyle: TextStyle(fontSize: 14),
+              colorBg: Colors.green[300],
             ),
           ),
         ),
