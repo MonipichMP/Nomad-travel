@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nomad_travel/constants/style.dart';
 import 'package:nomad_travel/pages/charts_page/bar_charts.dart';
-import 'package:nomad_travel/pages/charts_page/hoz_chart.dart';
-import 'package:nomad_travel/pages/charts_page/web_view_page.dart';
+import 'package:nomad_travel/pages/charts_page/web_view_page_inapp_webview.dart';
 
 class ChartPage extends StatefulWidget {
   @override
@@ -45,7 +44,7 @@ class _ChartPageState extends State<ChartPage> {
           },
         ),
         title: Text(
-          ">< Charts ><",
+          "Charts",
           style: titleStyle.copyWith(color: Theme.of(context).primaryColor),
         ),
         centerTitle: true,
@@ -58,7 +57,7 @@ class _ChartPageState extends State<ChartPage> {
           mainAxisSize: MainAxisSize.max,
           children: [
             if (dropdownValue == "bar") BarCharts(),
-            if (dropdownValue == "web") WebViewPage(),
+            if (dropdownValue == "web") WebViewPageInAppWebView(),
           ],
         ),
       ),
