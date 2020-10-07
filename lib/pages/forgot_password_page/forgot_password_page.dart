@@ -5,7 +5,7 @@ import 'package:nomad_travel/pages/main_page/main_page.dart';
 
 class ForgotPasswordPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController phone = TextEditingController();
+  final TextEditingController phone = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +77,7 @@ class ForgotPasswordPage extends StatelessWidget {
                     if (input.length < 9) {
                       return "Input phone is incorret form";
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 50),

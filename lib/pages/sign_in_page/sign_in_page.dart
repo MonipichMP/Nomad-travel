@@ -7,8 +7,8 @@ import 'package:nomad_travel/pages/forgot_password_page/forgot_password_page.dar
 
 class SignInPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController phone = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +82,7 @@ class SignInPage extends StatelessWidget {
                     if (input.length < 9) {
                       return "Input phone is incorret form";
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 30),
@@ -117,6 +118,7 @@ class SignInPage extends StatelessWidget {
                     if (input.length < 6) {
                       return 'Input password more than 6';
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 50),

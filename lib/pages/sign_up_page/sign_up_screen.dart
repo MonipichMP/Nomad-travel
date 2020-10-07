@@ -6,9 +6,9 @@ import 'package:nomad_travel/pages/sign_in_page/sign_in_page.dart';
 
 class SignUpPage extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController email = TextEditingController();
-  TextEditingController phone = TextEditingController();
-  TextEditingController password = TextEditingController();
+  final TextEditingController email = TextEditingController();
+  final TextEditingController phone = TextEditingController();
+  final TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -81,6 +81,7 @@ class SignUpPage extends StatelessWidget {
                     if (input.length < 9) {
                       return "Input phone is incorret form";
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 30),
@@ -115,6 +116,7 @@ class SignUpPage extends StatelessWidget {
                     if (!input.contains('@')) {
                       return 'Input email wrong pattern';
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 30),
@@ -150,6 +152,7 @@ class SignUpPage extends StatelessWidget {
                     if (input.length < 6) {
                       return 'Input password more than 6';
                     }
+                    return "";
                   },
                 ),
                 SizedBox(height: 50),
@@ -171,7 +174,10 @@ class SignUpPage extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("No account yet? ", style: subtitleStyle.copyWith(color: Colors.grey),),
+                    Text(
+                      "No account yet? ",
+                      style: subtitleStyle.copyWith(color: Colors.grey),
+                    ),
                     InkWell(
                       onTap: () {
                         Navigator.push(

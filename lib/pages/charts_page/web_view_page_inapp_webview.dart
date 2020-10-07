@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -16,19 +15,28 @@ class _WebViewPageInAppWebViewState extends State<WebViewPageInAppWebView> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      height: MediaQuery.of(context).size.height * 0.83,
-      child: InAppWebView(
-        initialUrl: "about:blank",
-        initialOptions: InAppWebViewGroupOptions(
-            crossPlatform: InAppWebViewOptions(
-          debuggingEnabled: true,
-        )),
-        onWebViewCreated: (controller) async {
-          webView = controller;
-          loadString();
-        },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("ខ្សាច់កណ្តាល"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Container(
+        color: Colors.white,
+        height: MediaQuery.of(context).size.height * 0.83,
+        child: InAppWebView(
+          initialUrl: "about:blank",
+          initialOptions: InAppWebViewGroupOptions(
+              crossPlatform: InAppWebViewOptions(
+            debuggingEnabled: true,
+          )),
+          onWebViewCreated: (controller) async {
+            webView = controller;
+            loadString();
+          },
+        ),
       ),
     );
   }
@@ -102,9 +110,8 @@ class _WebViewPageInAppWebViewState extends State<WebViewPageInAppWebView> {
     }
 
     String datastr = " var data = [$str];\n";
-    String baseUrl =
-        await rootBundle.loadString("assets/web/sach_kondal1.html");
-
+    // String baseUrl =
+    //     await rootBundle.loadString("assets/web/sach_kondal1.html");
 
     ///work file in assets pc
     // String url = "http://localhost:8080/assets/web/sach_kondal1.html";
@@ -120,18 +127,28 @@ class _WebViewPageInAppWebViewState extends State<WebViewPageInAppWebView> {
 
     ///try in phone file
     Directory directory2 = await getExternalStorageDirectory();
-    var file = File("${directory2.path}/sach_kondal1.html");
+    var file = File(
+        "${directory2.path}/Android/data/com.nomad.nomad_travel/files/sach_kondal1.html");
+    debugPrint(file.toString());
+
     ///read what inside
     String contents = await file.readAsString();
-    /// Substring to insert data
-    var startScript = contents.substring(0, 880);
-    var endScript = contents.substring(881);
-    var fullAddedData = startScript + datastr + endScript;
-    ///write back with added data
-    file.writeAsString(fullAddedData);
+
+    if (contents.contains(datastr)) {
+      file.writeAsString(contents);
+    } else {
+      /// Substring to insert data
+      var startScript = contents.substring(0, 880);
+      var endScript = contents.substring(881);
+      var fullAddedData = startScript + datastr + endScript;
+
+      ///write back with added data
+      await file.writeAsString(fullAddedData);
+    }
 
     String phoneUrl =
-        "http://localhost:8080/${directory2.path}/sach_kondal1.html";
+        "http://localhost:8080/${directory2.path}/Android/data/com.nomad.nomad_travel/files/sach_kondal1.html";
+    debugPrint(phoneUrl);
     webView.loadUrl(url: phoneUrl);
   }
 }

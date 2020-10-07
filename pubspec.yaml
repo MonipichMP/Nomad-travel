@@ -40,7 +40,13 @@ dependencies:
   flutter_echarts: ^1.3.6
   flutter_bloc: ^6.0.5
   equatable: ^1.2.5
-  path_provider: ^1.6.18
+
+#  path_provider: ^1.6.18
+  path_provider: ^0.4.1 #define this version bcoz it take external to parent head
+  permission_handler: ^3.3.0
+  intl: ^0.16.0
+  fluttertoast: ^3.1.3
+  open_file: 2.1.1
 
 dev_dependencies:
   flutter_test:
@@ -58,6 +64,7 @@ flutter:
   uses-material-design: true
   assets:
      - assets/images/
+     - assets/images/file_manager_assets/
      - assets/translation/
      - assets/web/
 
